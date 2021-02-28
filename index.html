@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>多边形坐标编辑器</title>
+    <script src="libs/p5.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        #main>canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+
+    </div>
+    <div id="points"></div>
+</body>
+
+</html>
+<script>
+    let points = [];
+    let imgs = [];
+    let img;
+    function setup() {
+        let cnv = createCanvas(600, 600);
+        cnv.parent('main');
+        cnv.id('draw')
+        image(img, 0, 0);
+        document.getElementById('draw').addEventListener('click', function () {
+            points.push([mouseX, mouseY]);
+            document.getElementById('points').innerHTML = JSON.stringify(points);
+            circle(mouseX, mouseY, 10);
+            if(points.length > 1){
+                let prev = points[points.length - 2];
+                let cur = points[points.length - 1];
+                line(prev[0],prev[1],cur[0],cur[1]);
+            }
+        })
+    }
+    function preload() {
+        img = loadImage('images/c6.png');
+    }
+</script>
